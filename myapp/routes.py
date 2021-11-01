@@ -1,5 +1,5 @@
 from myapp import myobj
-from myapp.forms import LoginForm
+from myapp.forms import LoginForm, TopCities
 from flask import render_template, escape, flash, redirect
 
 @myobj.route("/")
@@ -35,3 +35,11 @@ def main():
             { 'author' : 'Susan', 'body' : 'The day is cloudy today!'}]
 
     return render_template('hello.html', users=users, datee=date, post=post)
+
+@myobj.route("/home")
+def home_hw():
+    title = 'Top Cities'
+    name = 'Sam'
+    form = TopCities()
+
+    return render_template('home.html', title=title, name=name)
