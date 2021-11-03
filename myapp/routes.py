@@ -1,5 +1,7 @@
 from myapp import myobj
+from myapp import db
 from myapp.forms import LoginForm, TopCities
+from myapp.models import Cities
 from flask import render_template, escape, flash, redirect
 
 @myobj.route("/")
@@ -36,10 +38,17 @@ def main():
 
     return render_template('hello.html', users=users, datee=date, post=post)
 
-@myobj.route("/home")
+@myobj.route("/home", methods=['GET', 'POST'])
 def home_hw():
     title = 'Top Cities'
     name = 'Sam'
     form = TopCities()
 
-    return render_template('home.html', title=title, name=name)
+    if form.validate_on_submit():
+        flash(f'{form.city_name.data} added at position {form.city_rank.data}')
+        city = form.city_name.data
+        rank = form.city_rank.data
+        ranked_city = Cities()
+        db.session.add(ranked_city)
+        return redirect('/home')
+    return render_template('home.html', title=title, name=name, form=form)

@@ -8,3 +8,10 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User  {self.username}>'
+
+class Cities(db.Model):
+    city = db.Column(db.String(64), primary_key=True)
+    rank = db.Column(db.Integer, index=True, unique=True)
+
+    def __repr__(self):
+        return { self.city, self.rank }
